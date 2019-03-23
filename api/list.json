@@ -3,12 +3,14 @@
     "id": 1,
     "first_name": "Ana",
     "last_name": "Maria",
-    "phone_number": "0756456201"
+    "phone_number": "0756456201",
+    "email": "dmeh@gmail.com"
   },
   {
     "id": 2,
     "first_name": "Adrian",
     "last_name": "Laf",
-    "phone_number": "0656103210"
+    "phone_number": "0656103210",
+    "email": "paulm@gmail.com"
   }
 ]
