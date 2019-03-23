@@ -1,18 +1,22 @@
 window.PhoneBook = {
 
-    apiUrl: "http://localhost:8081/phone-book",
+    //declare var for update
+    phoneBookList:[],
+    editId:'',
+
+    apiUrl: "http://localhost:8080/phone-book",
 
     const: API = {
-        CREATE: "./api/add.json",
-        READ: "./api/list.json",
-        UPDATE: "./api/update.json",
-        DELETE: "./api/delete.json"
+        CREATE: "http://localhost:8080/phone-book",
+        READ: "http://localhost:8080/phone-book",
+        UPDATE: "http://localhost:8080/phone-book",
+        DELETE: "http://localhost:8080/phone-book"
     },
 const:ACTION_METHODS = {
-    CREATE: "GET",
+    CREATE: "POST",
     READ: "GET",
-    UPDATE: "GET",
-    DELETE: "GET"
+    UPDATE: "PUT",
+    DELETE: "DELETE"
 },
 
 
@@ -30,25 +34,31 @@ add: function () {
         };
 
         $.ajax({
-            url: PhoneBook.apiUrl,
-            method: "POST",
+            url: API.CREATE,
+            method: ACTION_METHODS.CREATE,
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(data)
         }).done(function (response) {
             console.log(response);
-        });
+            $('#phone-book tbody').append(PhoneBook.getRow(response));
+
+        }).fail(function (jqXHR, textStatus, error) {
+            alert(textStatus);
+        })
     },
+
+
 
     getRow: function (phone) {
 
-        return `<tr>
+        return `<tr id="${phone.id}">
 <td class="first_name">${phone.first_name}</td>
 <td class="last_name">${phone.last_name}</td>
 <td class="phone_number">${phone.phone_number}</td>
 <td class="email">${phone.email}</td>
 
-
-<td><a href="#" class="fa fa-trash delete" data-id="${phone.id}"></a></td>
+<td><a href='#' data-id='${phone.id}' class='edit'>&#9998;</a>
+<a href="#" class="fa fa-trash delete" data-id="${phone.id}"></a></td>
 </tr>
 `
     },
@@ -67,27 +77,36 @@ add: function () {
 
     get: function () {
         $.ajax({
-            url: PhoneBook.apiUrl,
-            method: "GET"
-        }).done(function (response) {
-            console.log(response);
-            // reload items table
-
-            PhoneBook.display(response);
-        });
-    },
-
-    load: function () {
-        $.ajax({
             url: API.READ,
             method: ACTION_METHODS.READ
         }).done(function (response) {
-            console.info('done:', response);
-            PhoneBook.load(response);
-            PhoneBook.display(response);
-    });
-},
+            console.log(response);
+            // reload items table
+            PhoneBook.phoneBookList=response["content"];
+            PhoneBook.display(response["content"]);
+        });
+    },
 
+
+    startEdit: function (id) {
+        // ES5 function systax inside find
+        var editPhone = PhoneBook.phoneBookList.find(function (phone) {
+            console.log(phone.first_name);
+            return phone.id == id;
+        });
+        console.debug('startEdit', editPhone);
+
+        $('input[name=first_name]').val(editPhone.first_name);
+        $('input[name=last_name]').val(editPhone.last_name);
+        $('input[name=phone_number]').val(editPhone.phone_number);
+        $('input[name=email]').val(editPhone.email);
+        PhoneBook.editId = id;
+    },
+
+    cancelEdit: function() {
+        PhoneBook.editId = '';
+        document.querySelector(".create-phone-form").reset();
+    },
 
     delete: function (id) {
         $.ajax({
@@ -95,8 +114,10 @@ add: function () {
             method: ACTION_METHODS.DELETE
         }).done(function (response) {
             console.log(response);
+            $('#phone-book tbody').find("tr#" + id).remove();
             // reload items table
-            PhoneBook.get();
+            //PhoneBook.get();
+
         });
     },
 
@@ -106,9 +127,7 @@ add: function () {
             method: ACTION_METHODS.UPDATE,
             data: phone
         }).done(function (response) {
-            if (response.success) {
-                PhoneBook.update(phone);
-            }
+
         });
     },
 
@@ -130,10 +149,14 @@ add: function () {
             var id = $(this).data('id');
             PhoneBook.delete(id);
         });
+
+        $('#phone-book tbody').delegate('.edit', 'click', function () {
+            var id = $(this).data('id');
+            PhoneBook.startEdit(id);
+        });
     }
 };
 
 
-PhoneBook.load();
 PhoneBook.get();
 PhoneBook.bindEvents();
