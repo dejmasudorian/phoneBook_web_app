@@ -26,7 +26,7 @@ add: function () {
             'first_name': first_name,
             'last_name': last_name,
             'phone_number': phone_number,
-            'email': email,
+            'email': email
         };
 
         $.ajax({
@@ -81,10 +81,10 @@ add: function () {
         $.ajax({
             url: API.READ,
             method: ACTION_METHODS.READ
-        }).done(function (persons) {
-            console.info('done:', persons);
-            PhoneBook.load(persons);
-            PhoneBook.display(persons);
+        }).done(function (response) {
+            console.info('done:', response);
+            PhoneBook.load(response);
+            PhoneBook.display(response);
     });
 },
 
