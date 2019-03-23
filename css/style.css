@@ -1,0 +1,23 @@
+#phone-book {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#phone-book td, #phone-book th {
+    text-align: left;
+    padding: 8px;
+}
+
+#phone-book tr:nth-child(even){background-color: #f2f2f2;}
+
+#phone-book tr:hover {background-color: #ddd;}
+
+#phone-book th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: DodgerBlue;
+    color: white;
+}
+

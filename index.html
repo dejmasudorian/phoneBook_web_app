@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Phone Book</title>
+
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+
+<h1>Phone Book</h1>
+
+<table id="phone-book">
+    <thead>
+    <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Phone Number</th>
+        <th>Email</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>Dan</td>
+        <td>Meh</td>
+        <td>0265-469-659</td>
+        <td>dmeh@gmail.com</td>
+
+    </tr>
+    <tr>
+        <td>Paul</td>
+        <td>Muresan</td>
+        <td>0123-456-789</td>
+        <td>paulm@gmail.com</td>
+
+    </tr>
+
+    </tbody>
+</table>
+
+<h3>Add new phone contact</h3>
+<form id="create-phone-form">
+    <input type="text" name="first_name" title="First Name" placeholder="First Name"/>
+    <input type="text" name="last_name" title="Last Name" placeholder="Last Name"/>
+    <input type="text" name="phone_number" title="Phone Number" placeholder="Phone Number"/>
+
+    <button type="submit">Register Contact</button>
+</form>
+
+<script src="js/lib/jquery-3.3.1.js"></script>
+<script src="js/phone-book.js"></script>
+
+</body>
+</html>
