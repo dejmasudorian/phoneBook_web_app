@@ -26,7 +26,7 @@ add: function () {
             'first_name': first_name,
             'last_name': last_name,
             'phone_number': phone_number,
-            'email': email
+            'email': email,
         };
 
         $.ajax({
@@ -39,16 +39,16 @@ add: function () {
         });
     },
 
-    getRow: function (phonebook) {
+    getRow: function (phone) {
 
         return `<tr>
-<td class="first_name">${phonebook.first_name}</td>
-<td class="last_name">${phonebook.last_name}</td>
-<td class="phone_number">${phonebook.phone_number}</td>
-<td class="email">${phonebook.email}</td>
+<td class="first_name">${phone.first_name}</td>
+<td class="last_name">${phone.last_name}</td>
+<td class="phone_number">${phone.phone_number}</td>
+<td class="email">${phone.email}</td>
 
 
-<td><a href="#" class="fa fa-trash delete" data-id="${phonebook.id}"></a></td>
+<td><a href="#" class="fa fa-trash delete" data-id="${phone.id}"></a></td>
 </tr>
 `
     },
@@ -112,9 +112,11 @@ add: function () {
         });
     },
 
+
+
     bindEvents: function () {
 
-        $("#create-item-form").submit(function (event) {
+        $("#create-phone-form").submit(function (event) {
             event.preventDefault();
 
             console.log('Submitting form');
@@ -131,5 +133,7 @@ add: function () {
     }
 };
 
+
+PhoneBook.load();
 PhoneBook.get();
 PhoneBook.bindEvents();
